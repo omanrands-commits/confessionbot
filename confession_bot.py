@@ -10,12 +10,13 @@ Usage:
     pip install python-telegram-bot
     python confession_bot.py
 """
-
 import asyncio
 import logging
 import os
 import random
 from pathlib import Path
+from threading import Thread # Add this
+from flask import Flask      # Add this
 
 from telegram import Update
 from telegram.ext import (
@@ -26,6 +27,19 @@ from telegram.ext import (
     filters,
 )
 
+# ── Dummy Web Server for Render ──────────────────────────────────────────────
+web_app = Flask(__name__)
+
+@web_app.route('/')
+def health_check():
+    return "Bot is alive and polling!", 200
+
+def run_dummy_server():
+    # Render assigns a dynamic port, default to 8080 locally
+    port = int(os.environ.get("PORT", 8080))
+    # Must bind to 0.0.0.0 for external access
+    web_app.run(host="0.0.0.0", port=port)
+    
 # ─────────────────────────────────────────────
 # CONFIGURATION — edit these before running
 # ─────────────────────────────────────────────
@@ -220,9 +234,8 @@ async def post_scheduled(context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
-
 def main() -> None:
-    if BOT_TOKEN == "YOUR_BOT_TOKEN_HERE":
+    if BOT_TOKEN == "8659744812:AAG5UlIwvnihCEgQoLNq6Pe8Lw1R8Crzazs":
         print(
             "\n❌  ERROR: You haven't set your BOT_TOKEN.\n"
             "   1. Message @BotFather on Telegram\n"
@@ -253,8 +266,12 @@ def main() -> None:
     else:
         logger.warning("No confessions loaded — scheduled posting is OFF.")
 
+    # 👇 ADD THESE TWO LINES 👇
+    logger.info("Starting dummy web server for Render health checks...")
+    Thread(target=run_dummy_server).start()
+
     logger.info("Bot is running. Press Ctrl+C to stop.")
-    app.run_polling(drop_pending_updates=True)
+    app.run_polling(drop_pending_updates=True) # <-- Your existing polling line
 
 
 if __name__ == "__main__":
