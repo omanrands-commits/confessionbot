@@ -41,12 +41,14 @@ def run_dummy_server():
     web_app.run(host="0.0.0.0", port=port)
     
 # ─────────────────────────────────────────────
+# ─────────────────────────────────────────────
 # CONFIGURATION — edit these before running
 # ─────────────────────────────────────────────
 BOT_TOKEN        = "8659744812:AAG5UlIwvnihCEgQoLNq6Pe8Lw1R8Crzazs"   # ← paste your token here
 GROUP_ID         = -1003876111043            # ← already set
-INTERVAL         = 15                        # seconds between auto-posts
+INTERVAL         = 60                        # seconds between auto-posts
 CONFESSIONS_FILE = "confessions.txt"         # path to your confessions file
+# ─────────────────────────────────────────────
 # ─────────────────────────────────────────────
 
 logging.basicConfig(
