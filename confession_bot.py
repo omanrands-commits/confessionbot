@@ -234,8 +234,7 @@ async def post_scheduled(context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
-def main() -> None:
-    if BOT_TOKEN == "8659744812:AAG5UlIwvnihCEgQoLNq6Pe8Lw1R8Crzazs":
+if BOT_TOKEN == "YOUR_BOT_TOKEN_HERE":
         print(
             "\n❌  ERROR: You haven't set your BOT_TOKEN.\n"
             "   1. Message @BotFather on Telegram\n"
