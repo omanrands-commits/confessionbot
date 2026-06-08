@@ -234,15 +234,7 @@ async def post_scheduled(context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
-if BOT_TOKEN == "YOUR_BOT_TOKEN_HERE":
-        print(
-            "\n❌  ERROR: You haven't set your BOT_TOKEN.\n"
-            "   1. Message @BotFather on Telegram\n"
-            "   2. Create a bot with /newbot\n"
-            "   3. Copy the token and replace YOUR_BOT_TOKEN_HERE in this file\n"
-        )
-        return
-
+def main() -> None:
     # Load confessions file
     state.reload()
 
@@ -265,12 +257,12 @@ if BOT_TOKEN == "YOUR_BOT_TOKEN_HERE":
     else:
         logger.warning("No confessions loaded — scheduled posting is OFF.")
 
-    # 👇 ADD THESE TWO LINES 👇
+    # Start the dummy web server for Render health checks
     logger.info("Starting dummy web server for Render health checks...")
     Thread(target=run_dummy_server).start()
 
     logger.info("Bot is running. Press Ctrl+C to stop.")
-    app.run_polling(drop_pending_updates=True) # <-- Your existing polling line
+    app.run_polling(drop_pending_updates=True)
 
 
 if __name__ == "__main__":
